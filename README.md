@@ -14,9 +14,9 @@
     <br />
     <br />
     <a href="https://github.com/JohanScheepers/TTN_Gateway_Node/blob/main/images/gatewayRadius.gif">View Demo</a>
-    ·
+    •
     <a href="https://github.com/JohanScheepers/TTN-Mapper/issues">Report Bug</a>
-    ·
+    •
     <a href="https://github.com/JohanScheepers/TTN-Mapper/issues">Request Feature</a>
   </p>
 </p>
@@ -114,6 +114,10 @@ To get a local copy up and running follow these simple steps.
   https://dev.mysql.com/downloads/workbench/
   ```
 
+  * The Things Network – Application with GPS nodes connected
+  ```sh
+  https://www.thethingsnetwork.org/
+  ```
 
 
 
@@ -143,11 +147,26 @@ To get a local copy up and running follow these simple steps.
    ```sh
    https://dev.mysql.com/doc/workbench/en/wb-getting-started-tutorial-creating-a-model.html
    ```
-17. Install the Node-Red flow
+7. From your application in “The Thing Network” go to your “Console”, select the application that contains your GPS Nodes. This is the application that collect the data from your GPS nodes. 
+Go to “Integration” and select “MQTT”, select “Generate new API key”. Note the “Public TLS address”, “Username” and “Password”, this is going to be needed in the MQTT node in the Node-Red flow.
+
+8. Install the Node-Red flow, copping the *.json from below into your Node-Red running on the sever you have installed Node-Red on. “localhost:1880”
    ```sh
    https://github.com/JohanScheepers/TTN_Gateway_Node/blob/master/flow/TTN_Gateway_Radius.json
    ```
 
+9. In the Node-Red flow configure the MQTT node “mqtt from TTN”, here you need the credentials from Step 7 and “MQTT in Node-RED [HowTo]”  the link below is a good resource to read
+   ```sh
+   https://www.thethingsnetwork.org/forum/t/mqtt-in-node-red-howto/39909
+   ```
+
+10. In the Node-Red flow configure the “json to DB” MySQL node. Select in the Database dropdown “Add new MySQLdatabase”. Enter  your Host, Port 3306, User, Password and Database.
+
+11.  In the Node-Red flow configure the “Query date from json BD - Set Date correct format”, here you need to add your database in the msg.topic. Where you see “soiot.json” replace this with your database and table name.
+12.  In the Node-Red flow configure “DB to json” here in the Database dropdown you should see tor database, if not Deploy your flow and then re-check and see if it is there and select it.
+
+13. In the Node-Red flow configure the function node “Decoder ****”, in my flow I have two different GPS nodes decoders, as I use both Abbeway and Digital Matters GPS nodes. You need the change the “On Start” to suit your device decoder.
+14. Deploy your flow, now you need to wait and get some GPS date into the DB so you have date to recall. This will take some time, dependant on how often your nodes report in.
 
 
 
@@ -216,3 +235,4 @@ Project Link: [https://github.com/JohanScheepers/ TTN_Gateway_Node](https://gith
 [license-url]: https://github.com/JohanScheepers/repo/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/johan-scheepers-6a263514a/
+
