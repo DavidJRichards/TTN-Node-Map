@@ -5,10 +5,10 @@
     <img src="images/SIGNALOWL.jpg" alt="Logo" width="160" height="80">
   </a>
 
-  <h3 align="center">TTN Gateway Radius and New Node</h3>
+  <h3 align="center">TTN Node Coverage Map</h3>
 
   <p align="center">
-    Project is aimed to use the TTN API to plot gateways and location of potencial new node on map
+    Project is aimed to store node GPS points and then display on a map the nodes and gateway connections
     <br />
     <a href="https://github.com/JohanScheepers/TTN-Mapper"><strong>Explore the docs »</strong></a>
     <br />
@@ -71,6 +71,8 @@ In this project were are going to save all the uplinks from TTN in the raw forma
 * []()Node-Red
 * []()node-red-dashboard
 * []()node-red-contrib-web-worldmap
+* []()node-red-node-mysql
+* []()MySQL
 
 
 
@@ -96,6 +98,21 @@ To get a local copy up and running follow these simple steps.
   ```sh
   https://flows.nodered.org/node/node-red-contrib-web-worldmap
   ```
+  
+  * node-red-node-mysql
+  ```sh
+  https://flows.nodered.org/node/node-red-node-mysql
+  ```
+    
+  * MySQL
+  ```sh
+  With a little bit of Googling find the installation for your OS
+  ```
+  
+  * MySQL Workbench
+  ```sh
+  https://dev.mysql.com/downloads/workbench/
+  ```
 
 
 
@@ -114,7 +131,19 @@ To get a local copy up and running follow these simple steps.
    ```sh
    npm install node-red-contrib-web-worldmap
    ```
-4. Install the Node-Red flow
+4. Install npm  node-red-node-mysql
+   ```sh
+   npm install node-red-node-mysql
+   ```
+5. Install MySQL Workbench
+   ```sh
+   https://dev.mysql.com/downloads/workbench/
+   ```
+ 6. Open Workbeanch and follow the instructions on creating a new database and table. Please keep a note of the username and password for the db, we will require it later to set up the node-red flow. We require a table that has two columns, "json" and "timestamp".
+   ```sh
+   https://dev.mysql.com/doc/workbench/en/wb-getting-started-tutorial-creating-a-model.html
+   ```
+17. Install the Node-Red flow
    ```sh
    https://github.com/JohanScheepers/TTN_Gateway_Node/blob/master/flow/TTN_Gateway_Radius.json
    ```
