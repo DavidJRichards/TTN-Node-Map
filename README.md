@@ -5,7 +5,7 @@ TTN Mapper - Maps all your GPS nodes and uplinks to gateways
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/JohanScheepers/TTN_Gateway_Node">
+  <a href="https://github.com/JohanScheepers/TTN-Mapper">
     <img src="images/SIGNALOWL.jpg" alt="Logo" width="160" height="80">
   </a>
 
@@ -14,7 +14,7 @@ TTN Mapper - Maps all your GPS nodes and uplinks to gateways
   <p align="center">
     Project is aimed to use the TTN API to plot gateways and location of potencial new node on map
     <br />
-    <a href="https://github.com/JohanScheepers/TTN_Gateway_Node"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/JohanScheepers/TTN-Mapper"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/JohanScheepers/TTN_Gateway_Node/blob/main/images/gatewayRadius.gif">View Demo</a>
