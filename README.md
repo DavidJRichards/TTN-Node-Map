@@ -182,7 +182,9 @@ There the user via the dropdown box the “date from” and the “date to”, s
 
 Now the flow queries the DB and returns the data and plots on the map. It will plot the location of were the node were, the link path and the gateway connected to. The node and link colour is relative to the rssi.
 
-You will note that sometimes the uplink were received by more than one gateway from the node. Here you will see that from one node location there are multiple links, each link will still be relative to the rssi, but you will only notice a plot with a number for the node. If you select it, all the ploted node poits will pop up, by selecting one you will bee able to see the uplink rssi and the gateway information.
+You will note that sometimes the uplink were received by more than one gateway from the node. Here you will see that from one node location there are multiple links, each link will still be relative to the rssi, but you will only notice a plot with a number for the node. If you select it, all the plotted node points will pop up, by selecting one you will be able to see the uplink rssi and the gateway information.
+
+You will also see all the “raw” data in the table from the DB.
 
 
 ### Demo
@@ -235,4 +237,3 @@ Project Link: [https://github.com/JohanScheepers/ TTN_Gateway_Node](https://gith
 [license-url]: https://github.com/JohanScheepers/repo/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/johan-scheepers-6a263514a/
-
