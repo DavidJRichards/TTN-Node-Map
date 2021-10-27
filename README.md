@@ -19,9 +19,9 @@ TTN Mapper - Maps all your GPS nodes and uplinks to gateways
     <br />
     <a href="https://github.com/JohanScheepers/TTN_Gateway_Node/blob/main/images/gatewayRadius.gif">View Demo</a>
     ·
-    <a href="https://github.com/JohanScheepers/TTN_Gateway_Node/issues">Report Bug</a>
+    <a href="https://github.com/JohanScheepers/TTN-Mapper/issues">Report Bug</a>
     ·
-    <a href="https://github.com/JohanScheepers/TTN_Gateway_Node/issues">Request Feature</a>
+    <a href="https://github.com/JohanScheepers/TTN-Mapper/issues">Request Feature</a>
   </p>
 </p>
 
@@ -47,11 +47,7 @@ TTN Mapper - Maps all your GPS nodes and uplinks to gateways
     <li>
 	<a href="#usage">Usage</a>
 	<ul>
-        <li><a href="#gateway-within-radius">Gateway within Radius</a></li>
-        <li><a href="#radius-around-gateway">Radius around Gateway</a></li>
-        <li><a href="#plot-new-node">Plot New Node</a></li>
-	   <li><a href="#airtime-calculator-for-loRaWAN">Airtime calculator for LoRaWAN</a></li>
-	   <li><a href="#the-things-network-status-page">The Things Network Status Page</a></li>
+        <li><a href="#date-selection">Date Selection</a></li>
         <li><a href="#demo">Demo</a></li>
         <li><a href="#flow">Flow</a></li>
       </ul>
@@ -67,11 +63,11 @@ TTN Mapper - Maps all your GPS nodes and uplinks to gateways
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-In this project we are going to call on two TTN API. Namely the <a href="https://mapper.packetbroker.net/api/v2/gateways?distanceWithin[latitude]=52.3676&distanceWithin[longitude]=4.9041&distanceWithin[distance]=7500&netID=000013&tenantID=ttn">TTN Radius API</a> to get the gateways within a certain radius form a GPS coordinate and the <a href="https://mapper.packetbroker.net/api/v2/gateways/netID=000013,tenantID=ttn,id=bb1st-jansmuts-1">TTN Gateway API</a> to get gateway specific data. These two API will plot the gateway on the map, including their status information. Bear in mind these API are rate limited.
+In this project were are going to save all the uplinks from TTN in the raw format to a MySQL database. From here we will recall the data and display it on a map. The map will display the location of the node, the uplink path and the gateway the node connected to. The node will be colour and the link as to the rssi.
 
 
 
-`TTN_Gateway_Node`
+`TTN-Mapper`
 
 
 ### Built With
@@ -79,7 +75,6 @@ In this project we are going to call on two TTN API. Namely the <a href="https:/
 * []()Node-Red
 * []()node-red-dashboard
 * []()node-red-contrib-web-worldmap
-* []()TTN API
 
 
 
@@ -135,41 +130,16 @@ To get a local copy up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-There are three user interfacing areas, Gateway within Radius, Radius around Gateway and Plot New Node.
+There are one user interfacing areas, Date Selection, you select the “date from” to “date to”.
 
-### Gateway within Radius
+### Date Selection
 
-Here the user have three fields to complete, Latitude dec, Longitude dec and Distance KM, once these are completed the ‘Get’ is used. This calls on the TTN Radius API to get all the Gateways within the specified radius from the coordinates supplied. The Latitude dec, Longitude dec are in decimal format and Distance KM is in kilometres.
+There the user via the dropdown box the “date from” and the “date to”, selects “SUBMIT”.
 
-This in turn calls on the TTN Gateway API that returns data more specific to the gateway. This triggers a flow that map the gateways on a map.
+Now the flow queries the DB and returns the data and plots on the map. It will plot the location of were the node were, the link path and the gateway connected to. The node and link colour is relative to the rssi.
 
-There are several fields of data about the gateway, we are only going  to display the following fields in tables, 'name', 'eui', 'latitude', 'longitude', 'rxRate', 'txRate', 'updateAt' and 'onlin'e.
+You will note that sometimes the uplink were received by more than one gateway from the node. Here you will see that from one node location there are multiple links, each link will still be relative to the rssi, but you will only notice one plot for the node. The plot only appears as one as all of them are on top of each other.
 
-There are two tables, Gateway Status Offline and Gateway Status Online. These tables display all the offline and online gateways, each field is selectable. If the field is selected the map zooms to that specific gateway.
-
-### Radius around Gateway
-
-Here we can set four different radiuses plotted around the gateways, this in in kilometres. Complete the distance and the radius will be plotted on the map.
-
-The clear these radiuses, either select CLEAR RADIUS or change the field value to 0.
-
-### Plot New Node
-
-Here we set the Latitude dec, Longitude dec and the Distance KM. The fields Latitude dec, Longitude dec are in in decimal format and Distance KM are in kilometres.
-
-You simply complete the coordinates and the point will be plotted on the map. If you require a radius drawn around the point you complete the Distance KM.
-
-This invokes a flow that generates the table "Distance Node to Gateway". In this table we are displaying attributes of the gateway, like 'name', 'eui', 'latitude', 'longitude", there are two other fields of interest here. 'distance KM' and 'azimuth' this is the distance from the node to the gateway and the azimuth from the node to the gateway.
-
-The delete the point from the map you press the DELETE button.
-
-### Airtime calculator for LoRaWAN
-
-This is a call to the website of arjanvanb - 'https://avbentem.github.io/airtime-calculator/ttn/eu868/10' this is a calculator to assist you to see the relationship between your payload length and SF value have on the airtime of your uplink or downlink.
-
-### The Things Network Status Page
-
-This is a call the The Things Network Status Page, showing some of the gateway statistic and other useful information.
 
 ### Demo
  
