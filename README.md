@@ -57,6 +57,8 @@
 
 
 <!-- ABOUT THE PROJECT -->
+<details open="open">
+
 ## About The Project
 
 In this project were are going to save all the uplinks from TTN in the raw format to a MySQL database. From here we will recall the data and display it on a map. The map will display the location of the node, the uplink path and the gateway the node connected to. The node will be colour and the link as to the rssi.
@@ -78,6 +80,8 @@ In this project were are going to save all the uplinks from TTN in the raw forma
 
 
 <!-- GETTING STARTED -->
+<details open="open">
+
 ## Getting Started
 
 To get a local copy up and running follow these simple steps.
@@ -122,6 +126,8 @@ To get a local copy up and running follow these simple steps.
 
 
 ### Installation
+<details open="open">
+
 
 1. Install Node-Red following the relevant getting started guide for your operating system form the official website
    ```sh
@@ -172,6 +178,8 @@ Go to “Integration” and select “MQTT”, select “Generate new API key”
 
 
 <!-- USAGE EXAMPLES -->
+<details open="open">
+
 ## Usage
 
 There are one user interfacing areas, Date Selection, you select the “date from” to “date to”.
@@ -188,11 +196,15 @@ You will also see all the “raw” data in the table from the DB.
 
 
 ### Demo
+<details open="open">
+
  
 <img src="images/gatewayRadius.gif" alt="Demo" width="900" height="450">
 
 
 ### Flow
+<details open="open">
+
 
 <img src="images/flow.png" alt="Demo" width="900" height="450">
 
@@ -200,6 +212,8 @@ You will also see all the “raw” data in the table from the DB.
 
 
 <!-- ROADMAP -->
+<details open="open">
+
 ## Roadmap
 
 See the [open issues](https://github.com/JohanScheepers/TTN_Gateway_Node/issues) for a list of proposed features (and known issues).
@@ -207,6 +221,8 @@ See the [open issues](https://github.com/JohanScheepers/TTN_Gateway_Node/issues)
 
 
 <!-- LICENSE -->
+<details open="open">
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
