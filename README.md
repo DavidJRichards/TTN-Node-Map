@@ -1,7 +1,3 @@
-# TTN-Mapper
-TTN Mapper - Maps all your GPS nodes and uplinks to gateways
-
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -138,7 +134,7 @@ There the user via the dropdown box the “date from” and the “date to”, s
 
 Now the flow queries the DB and returns the data and plots on the map. It will plot the location of were the node were, the link path and the gateway connected to. The node and link colour is relative to the rssi.
 
-You will note that sometimes the uplink were received by more than one gateway from the node. Here you will see that from one node location there are multiple links, each link will still be relative to the rssi, but you will only notice one plot for the node. The plot only appears as one as all of them are on top of each other.
+You will note that sometimes the uplink were received by more than one gateway from the node. Here you will see that from one node location there are multiple links, each link will still be relative to the rssi, but you will only notice a plot with a number for the node. If you select it, all the ploted node poits will pop up, by selecting one you will bee able to see the uplink rssi and the gateway information.
 
 
 ### Demo
