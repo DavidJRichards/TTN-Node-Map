@@ -97,22 +97,22 @@ To get a local copy up and running follow these simple steps.
   https://flows.nodered.org/node/node-red-contrib-web-worldmap
   ```
   
-  * node-red-node-mysql
+* node-red-node-mysql
   ```sh
   https://flows.nodered.org/node/node-red-node-mysql
   ```
     
-  * MySQL
+* MySQL
   ```sh
   With a little bit of Googling find the installation for your OS
   ```
   
-  * MySQL Workbench
+* MySQL Workbench
   ```sh
   https://dev.mysql.com/downloads/workbench/
   ```
 
-  * The Things Network – Application with GPS nodes connected
+* The Things Network – Application with GPS nodes connected
   ```sh
   https://www.thethingsnetwork.org/
   ```
