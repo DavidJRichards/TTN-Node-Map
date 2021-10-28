@@ -58,13 +58,12 @@
 
 <!-- ABOUT THE PROJECT -->
 <details open="open">
-
 ## About The Project
 
 In this project were are going to save all the uplinks from TTN in the raw format to a MySQL database. From here we will recall the data and display it on a map. The map will display the location of the node, the uplink path and the gateway the node connected to. The node will be colour and the link as to the rssi.
 
 
-`TTN-Mapper`
+`TTN-Node-Map`
 
 
 ### Built With
@@ -74,13 +73,12 @@ In this project were are going to save all the uplinks from TTN in the raw forma
 * []()node-red-contrib-web-worldmap
 * []()node-red-node-mysql
 * []()MySQL
-
 </details>
+
 
 
 <!-- GETTING STARTED -->
 <details open="open">
-
 ## Getting Started
 
 To get a local copy up and running follow these simple steps.
@@ -121,11 +119,10 @@ To get a local copy up and running follow these simple steps.
   ```sh
   https://www.thethingsnetwork.org/
   ```
-
 </details>
 
-### Installation
 <details open="open">
+### Installation
 
 
 1. Install Node-Red following the relevant getting started guide for your operating system form the official website
@@ -172,13 +169,12 @@ Go to “Integration” and select “MQTT”, select “Generate new API key”
 
 13. In the Node-Red flow configure the function node “Decoder ****”, in my flow I have two different GPS nodes decoders, as I use both Abbeway and Digital Matters GPS nodes. You need the change the “On Start” to suit your device decoder.
 14. Deploy your flow, now you need to wait and get some GPS date into the DB so you have date to recall. This will take some time, dependant on how often your nodes report in.
-
 </details>
+
 
 
 <!-- USAGE EXAMPLES -->
 <details open="open">
-
 ## Usage
 
 There are one user interfacing areas, Date Selection, you select the “date from” to “date to”.
@@ -196,37 +192,31 @@ You will also see all the “raw” data in the table from the DB.
 
 ### Demo
 <details open="open">
-
- 
 <img src="images/gatewayRadius.gif" alt="Demo" width="900" height="450">
 </details>
 
+
 ### Flow
 <details open="open">
-
-
 <img src="images/flow.png" alt="Demo" width="900" height="450">
-
 </details>
 
 
 <!-- ROADMAP -->
 <details open="open">
-
 ## Roadmap
 
 See the [open issues](https://github.com/JohanScheepers/TTN-Node-Map/issues) for a list of proposed features (and known issues).
-
 </details>
+
 
 <!-- LICENSE -->
 <details open="open">
-
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
 </details>
+
 
 <!-- CONTACT -->
 ## Contact
