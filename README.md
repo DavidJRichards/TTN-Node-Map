@@ -151,7 +151,7 @@ Go to “Integration” and select “MQTT”, select “Generate new API key”
 
 8. Install the Node-Red flow, copping the *.json from below into your Node-Red running on the sever you have installed Node-Red on. “localhost:1880”
    ```sh
-   https://github.com/JohanScheepers/TTN_Gateway_Node/blob/master/flow/TTN_Gateway_Radius.json
+   https://github.com/JohanScheepers/TTN-Node-Map/blob/main/TTN_Node_Map.json
    ```
 
 9. In the Node-Red flow configure the MQTT node “mqtt from TTN”, here you need the credentials from Step 7 and “MQTT in Node-RED [HowTo]”  the link below is a good resource to read
