@@ -142,7 +142,7 @@ To get a local copy up and running follow these simple steps.
    ```sh
    https://dev.mysql.com/downloads/workbench/
    ```
- 6. Open Workbeanch and follow the instructions on creating a new database and table. Please keep a note of the username and password for the db, we will require it later to set up the node-red flow. We require a table that has two columns, "json" and "timestamp".
+6. Open Workbeanch and follow the instructions on creating a new database and table. Please keep a note of the username and password for the db, we will require it later to set up the node-red flow. We require a table that has two columns, "json" and "timestamp".
    ```sh
    https://dev.mysql.com/doc/workbench/en/wb-getting-started-tutorial-creating-a-model.html
    ```
