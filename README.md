@@ -188,7 +188,7 @@ You will also see all the “raw” data in the table from the DB.
 
 ### Demo
 
-<img src="images/gatewayRadius.gif" alt="Demo" width="900" height="450">
+<img src="images/Demo%20TTN%20Node%20Map.gif" alt="Demo" width="900" height="450">
 
 
 
