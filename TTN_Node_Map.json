@@ -1,0 +1,602 @@
+[
+    {
+        "id": "011960955ce38515",
+        "type": "mysql",
+        "z": "81bf79cd33a5bd8a",
+        "mydb": "e15aca1763c788ca",
+        "name": "",
+        "x": 930,
+        "y": 460,
+        "wires": [
+            [
+                "cd3ab38ab2b8bd8a",
+                "96151deebb949052",
+                "fc585c4391cbdf3e"
+            ]
+        ]
+    },
+    {
+        "id": "cd3ab38ab2b8bd8a",
+        "type": "ui_table",
+        "z": "81bf79cd33a5bd8a",
+        "group": "ee8b70d64868c9f1",
+        "name": "json",
+        "order": 2,
+        "width": "12",
+        "height": "13",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1110,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "0296b49db0b31b2d",
+        "type": "comment",
+        "z": "81bf79cd33a5bd8a",
+        "name": "From DB json to Map",
+        "info": "",
+        "x": 240,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "96151deebb949052",
+        "type": "split",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 310,
+        "y": 560,
+        "wires": [
+            [
+                "62695b92a94276e7",
+                "1d64f1a225d938ef"
+            ]
+        ]
+    },
+    {
+        "id": "62695b92a94276e7",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "JSON.parse",
+        "func": "\nconst array = JSON.parse(msg.payload.json);\nmsg.payload = array\n\ndelete msg.payload.json\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 560,
+        "wires": [
+            [
+                "a37e87a680afa7ae",
+                "f72b066471a5498f"
+            ]
+        ]
+    },
+    {
+        "id": "40d3c550dca10f1b",
+        "type": "ui_form",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "label": "json Form",
+        "group": "ee8b70d64868c9f1",
+        "order": 1,
+        "width": "36",
+        "height": "4",
+        "options": [
+            {
+                "label": "From Date",
+                "value": "fromDate",
+                "type": "date",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "To Date",
+                "value": "toDate",
+                "type": "date",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "fromDate": "",
+            "toDate": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": true,
+        "className": "",
+        "x": 200,
+        "y": 400,
+        "wires": [
+            [
+                "3c6b8952c26f4984"
+            ]
+        ]
+    },
+    {
+        "id": "3c6b8952c26f4984",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Query date from json BD - Set Date correct format",
+        "func": "// var oldDate = msg.payload.toDate;\n\n// let Month = (oldDate.getMonth() + 1).toString().padStart(2,\"0\")\n\nlet ts = msg.payload.toDate;  // build an epoch datetime\nlet ms = Date.parse(ts)+24*3600000;  // add 24 hour in milliseconds\nlet toDate = (new Date(ms)).toISOString(); // convert time to UCT String\n\nmsg.topic = \"SELECT * FROM soiot.json WHERE timestamp between '\" + msg.payload.fromDate + \"' AND '\" + toDate + \"' order by timestamp desc;\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 400,
+        "wires": [
+            [
+                "542367cb497f4690",
+                "7fad29db55c7225e"
+            ]
+        ]
+    },
+    {
+        "id": "1d64f1a225d938ef",
+        "type": "debug",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 450,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "85d503df35de2249",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Prep array",
+        "func": "\nmsg.end_device_ids = msg.payload.end_device_ids\nmsg.received_at = msg.payload.received_at\nmsg.payload = msg.payload.uplink_message.rx_metadata\ndelete msg.topic\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 560,
+        "wires": [
+            [
+                "6b35c4c797cef566"
+            ]
+        ]
+    },
+    {
+        "id": "6b35c4c797cef566",
+        "type": "split",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1230,
+        "y": 560,
+        "wires": [
+            [
+                "e36ac29c8e714eb9",
+                "7539c66bd6ff2286",
+                "e5359a49113c42b0"
+            ]
+        ]
+    },
+    {
+        "id": "a37e87a680afa7ae",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Decoder - Abbeyway",
+        "func": "let data = msg.payload.uplink_message.frm_payload;\n    bytes = new Buffer(data,'Base64');\n\nlet decoded = context.Decoder(bytes, msg.payload.uplink_message.f_port);\nmsg.decoded_payload = decoded;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "context.Decoder = function(bytes, port) {\n    function step_size(lo, hi, nbits, nresv) {\n    return 1.0 / ((((1<<nbits) - 1) - nresv) / (hi - lo));\n  }\n\n  function mt_value_decode(value, lo, hi, nbits, nresv) {\n    return (value - nresv / 2) * step_size(lo, hi, nbits, nresv) + lo;\n  }\n\n  // Gets the zero-based unsigned numeric value of the given bit(s)\n  function bits(value, lsb, msb) {\n    var len = msb - lsb + 1;\n    var mask = (1<<len) - 1;\n    return value>>lsb & mask;\n  }\n\n  // Gets the boolean value of the given bit\n  function bit(value, bit) {\n    return (value & (1<<bit)) > 0;\n  }\n\n  // Gets a hexadecimal representation ensuring a leading zero for each byte\n  function hex(bytes, separator) {\n    return bytes.map(function (b) {\n      return (\"0\" + b.toString(16)).substr(-2);\n    }).join(separator || \"\");\n  }\n\n  // Decodes 4 bytes into a signed integer, MSB\n  function int32(bytes) {\n    // JavaScript bitwise operators always work with 32 bits signed integers\n    return bytes[0]<<24 | bytes[1]<<16 | bytes[2]<<8 | bytes[3];\n  }\n\n  // Decodes 4 bytes into an unsigned integer, MSB\n  function uint32(bytes) {\n   \n    return (bytes[0]<<24 | bytes[1]<<16 | bytes[2]<<8 | bytes[3])>>>0;    \n  }\n\n  // Decodes 1 to 4 MAC addresses and their RSSI\n  function mac_rssi(bytes) {\n    var items = [];\n    for (var offset = 0; offset < bytes.length; offset += 7) {\n      items.push({\n        mac_address: hex(bytes.slice(offset, offset + 6), \":\"),\n        // Sign-extend to 32 bits to support negative values; dBm\n        rssi: bytes[offset + 6]<<24>>24,\n      });\n    }\n    return items;\n  }\n\n  function message(code, descriptions) {\n    return {\n      code: code,\n      description: code < 0 || code >= descriptions.length ? \"UNKNOWN\" : descriptions[code]\n    };\n  }\n\n  var decoded = {};\n  var i;\n\n  var type = bytes[0];\n\n  // All message types, except for Frame pending messages, share the same header\n  if (type !== 0x00) {\n    // Note: the Data Storage Integration stores nested objects as text\n    decoded.status = {\n      mode: message(bits(bytes[1], 5, 7), [\"Standby\", \"Motion tracking\", \"Permanent tracking\",\n        \"Motion start/end tracking\", \"Activity tracking\", \"OFF\"]),\n      sos: bit(bytes[1], 4),\n      tracking: bit(bytes[1], 3),\n      moving: bit(bytes[1], 2),\n      periodic: bit(bytes[1], 1),\n      on_demand: bit(bytes[1], 0)\n    };\n\n    // Trackers with a rechargeable battery:the percentage reflects the actual value\n    decoded.battery = bytes[2]/100;\n    decoded.battery = bytes[2];\n    //Temperature\n    decoded.temperature = Math.round(100 * mt_value_decode(bytes[3], -44, 85, 8, 0)) / 100;\n    \n    decoded.ack = bits(bytes[4], 4, 7);\n    \n    decoded.data = bits(bytes[4], 0, 3);\n    //MCU and BLE fwVersion\n    decoded.lastResetCause = \"lastResetCause: \" + bytes[5];\n    decoded.mcuFirmware = \"fwVersion: \" + bytes[6] + \".\" + bytes[7] + \".\" + bytes[8];\n    decoded.bleFirmware = \"bleFwVersion\" + bytes[9] + \".\" + bytes[10] + \".\" + bytes[11];\n\n  }\n\n  switch (type) {\n    case 0x00:\n      decoded.type = \"FRAME PENDING\";\n      decoded.token = bytes[1];\n      break;\n\n    case 0x03:\n      decoded.type = \"POSITION\";\n      switch (decoded.data) {\n        case 0:\n          decoded.position_type = \"GPS fix\";\n          decoded.age = mt_value_decode(bytes[5], 0, 2040, 8, 0);\n          // Signed 32 bits integers; LSB is always zero\n          decoded.latitude = (bytes[6]<<24 | bytes[7]<<16 | bytes[8]<<8) / 1e7;\n          decoded.longitude = (bytes[9]<<24 | bytes[10]<<16 | bytes[11]<<8) / 1e7;\n          // Estimated Horizontal Position Error\n          decoded.ehpe = mt_value_decode(bytes[12], 0, 1000, 8, 0);\n          break;\n\n        case 1:\n          decoded.position_type = \"GPS timeout\";\n          decoded.timeout_cause = message(bytes[5], [\"User timeout cause\"]);\n          for (i = 0; i < 4; i++) {\n            // Carrier over noise (dBm) for the i-th satellite seen\n            decoded[\"cn\" + i] = mt_value_decode(bytes[6 + i], 0, 2040, 8, 0);\n          }\n          break;\n\n        case 2:\n          // Documented as obsolete\n          decoded.error = message(0, [\"UNSUPPORTED POSITION TYPE \" + decoded.data]);\n          break;\n\n        case 3:\n          decoded.position_type = \"WIFI timeout\";\n          for (i = 0; i < 6; i++) {\n            decoded[\"v_bat\" + (i + 1)] = mt_value_decode(bytes[5 + i], 2.8, 4.2, 8, 2);\n          }\n          break;\n\n        case 4:\n          decoded.position_type = \"WIFI failure\";\n          for (i = 0; i < 6; i++) {\n            // Most of time a WIFI timeout occurs due to a low battery condition\n            decoded[\"v_bat\" + (i + 1)] = mt_value_decode(bytes[5 + i], 2.8, 4.2, 8, 2);\n          }\n          decoded.error = message(bytes[11], [\"WIFI connection failure\", \"Scan failure\",\n            \"Antenna unavailable\", \"WIFI not supported on this device\"]);\n          break;\n\n        case 5:\n        case 6:\n          decoded.position_type = \"LP-GPS data\";\n          // Encrypted; not described in the documentation\n          decoded.error = message(0, [\"UNSUPPORTED POSITION TYPE \" + decoded.data]);\n          break;\n\n        case 7:\n          decoded.position_type = \"BLE beacon scan\";\n          decoded.age = mt_value_decode(bytes[5], 0, 2040, 8, 0);\n          // Remaining data: up to 4 beacons\n          decoded.beacons = mac_rssi(bytes.slice(6));\n          break;\n\n        case 8:\n          decoded.position_type = \"BLE beacon failure\";\n          decoded.error = message(bytes[5], [\"BLE is not responding\", \"Internal error\", \"Shared antenna not available\",\n            \"Scan already on going\", \"No beacon detected\", \"Hardware incompatibility\"]);\n          break;\n\n        // Test with: 0358D895090EC46E1FF44B9EB76466B3B87454AD500959CA1ED4AD525E67DA14A1AC\n        // or 032CD1890900C46E1FF44B9EC5C83A355A3898A6\n        case 9:\n          decoded.position_type = \"WIFI BSSIDs\";\n          decoded.age = mt_value_decode(bytes[5], 0, 2040, 8, 0);\n          // Remaining data: up to 4 WiFi BSSIDs\n          decoded.stations = mac_rssi(bytes.slice(6));\n          break;\n\n        default:\n          decoded.error = message(0, [\"UNSUPPORTED POSITION TYPE \" + decoded.data]);\n      }\n      break;\n\n    case 0x04:\n      decoded.type = \"ENERGY STATUS\";\n      break;\n\n    case 0x05:\n      decoded.type = \"HEARTBEAT\";\n      break;\n\n    case 0x07:\n      // Activity status message and configuration message share the same identifier\n      var tag = bytes[5];\n      switch (tag) {\n        case 1:\n          decoded.type = \"ACTIVITY STATUS\";\n          decoded.activity_counter = uint32(bytes.slice(6, 10));\n          break;\n\n        case 2:\n          decoded.type = \"CONFIGURATION\";\n          for (i = 0; i < 5; i++) {\n            var offset = 6 + 5 * i;\n            decoded[\"param\" + i] = {\n              type: bytes[offset],\n              value: uint32(bytes.slice(offset + 1, offset + 5))\n            };\n          }\n          break;\n\n        default:\n          decoded.error = message(0, [\"UNSUPPORTED POSITION TYPE \" + decoded.data + \"/\" + tag]);\n      }\n      break;\n\n    case 0x09:\n      decoded.type = \"SHUTDOWN\";\n      break;\n\n    case 0xFF:\n      decoded.type = \"DEBUG\";\n      break;\n\n    default:\n      decoded.error = message(0, [\"UNSUPPORTED MESSAGE TYPE \" + type]);\n  }\n\n  // Just some redundant debug info\n  decoded.debug = {\n    payload: hex(bytes),\n    length: bytes.length,\n    port: port,\n    server_time: new Date().toISOString()\n  };\n\n  return decoded;\n}\n",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 560,
+        "wires": [
+            [
+                "7428af79a7425af9"
+            ]
+        ]
+    },
+    {
+        "id": "7428af79a7425af9",
+        "type": "switch",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "property": "decoded_payload.latitude",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 560,
+        "wires": [
+            [
+                "85d503df35de2249",
+                "2f6181f43e6a030c"
+            ]
+        ]
+    },
+    {
+        "id": "bd0903c6adb4ab12",
+        "type": "ui_worldmap",
+        "z": "81bf79cd33a5bd8a",
+        "group": "ee8b70d64868c9f1",
+        "order": 0,
+        "width": "24",
+        "height": "13",
+        "name": "",
+        "lat": "-29.841763",
+        "lon": "30.913338",
+        "zoom": "12",
+        "layer": "OSM",
+        "cluster": "19",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 1540,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "eb9e917c1235dc5b",
+        "type": "worldmap",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "",
+        "cluster": "19",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 1540,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "e36ac29c8e714eb9",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Links",
+        "func": "let colour = \"blue\";\n\nif (msg.payload.rssi > -100)(\n    colour = \"red\")\n    else if (msg.payload.rssi > -105)(\n        colour = \"orange\")\n        else if (msg.payload.rssi > -110)(\n        colour = \"yellow\")\n        else if (msg.payload.rssi > -115)(\n        colour = \"green\")\n        else if (msg.payload.rssi > -120)(\n        colour = \"teal\")\n        else (\n        colour = \"blue\")\nmsg.payload.name = \"L\" + msg._msgid;\nmsg.payload.layer = \"link\";\nmsg.payload.line = [ [msg.payload.location.latitude, msg.payload.location.longitude], [msg.decoded_payload.latitude, msg.decoded_payload.longitude]];\nmsg.payload.color = colour;\n\n\n\n\ndelete msg.parts\ndelete msg.decoded_payload\ndelete msg.payload.snr\ndelete msg.payload.rssi\ndelete msg.payload.location\ndelete msg.payload.timestamp\ndelete msg.payload.gateway_ids\ndelete msg.payload.channel_rssi\ndelete msg.payload.uplink_token\ndelete msg.socketid\ndelete msg.end_device_ids\ndelete msg.received_at\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 520,
+        "wires": [
+            [
+                "eb9e917c1235dc5b"
+            ]
+        ]
+    },
+    {
+        "id": "7539c66bd6ff2286",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Gateways",
+        "func": "\nmsg.payload = { \"name\": msg.payload.gateway_ids.gateway_id, \"lat\":msg.payload.location.latitude, \"lon\":msg.payload.location.longitude, \"icon\": \"cloud\", \"iconColor\": 'blue',\"layer\": \"Gateway\",}\n\ndelete msg.parts\ndelete msg.decoded_payload\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 560,
+        "wires": [
+            [
+                "eb9e917c1235dc5b"
+            ]
+        ]
+    },
+    {
+        "id": "e5359a49113c42b0",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Nodes",
+        "func": "\nif (msg.payload.rssi > -100)(\n    colour = \"red\")\n    else if (msg.payload.rssi > -105)(\n        colour = \"orange\")\n        else if (msg.payload.rssi > -110)(\n        colour = \"yellow\")\n        else if (msg.payload.rssi > -115)(\n        colour = \"green\")\n        else if (msg.payload.rssi > -120)(\n        colour = \"teal\")\n        else (\n        colour = \"blue\")\n\n\n\n\nmsg.payload = { \"name\": \"g\" + msg._msgid, \"lat\":msg.decoded_payload.latitude, \"lon\":msg.decoded_payload.longitude, \"icon\":\"fa-circle\", \"iconColor\": colour, \"dev_eui\":msg.end_device_ids.dev_eui, \"time\":msg.received_at, \"gateway\": msg.payload.gateway_ids.gateway_id, \"rssi\":msg.payload.rssi, \"layer\": \"Node\",}\n\ndelete msg.parts\ndelete msg.decoded_payload\ndelete msg.payload.snr\ndelete msg.payload.location\ndelete msg.payload.timestamp\ndelete msg.payload.gateway_ids\ndelete msg.payload.channel_rssi\ndelete msg.payload.uplink_token\ndelete msg.socketid\ndelete msg.end_device_ids\ndelete msg.received_at\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 600,
+        "wires": [
+            [
+                "eb9e917c1235dc5b"
+            ]
+        ]
+    },
+    {
+        "id": "2f6181f43e6a030c",
+        "type": "debug",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 930,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "f72b066471a5498f",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Decoder - Digital Matter",
+        "func": "let data = msg.payload.uplink_message.frm_payload;\n    bytes = new Buffer(data,'Base64');\n\nlet decoded = context.Decoder(bytes, msg.payload.uplink_message.f_port);\nmsg.decoded_payload = decoded;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Decode an uplink message from an array of bytes to an object of fields\ncontext.Decoder = function Decoder(bytes, port)\n{\n var decoded = {};\n if (port === 1)\n {\n decoded.type = \"position\";\n\n decoded.latitude = bytes[0] + bytes[1] * 256 +\n bytes[2] * 65536 + bytes[3] * 16777216;\n if (decoded.latitude >= 0x80000000)\n decoded.latitude -= 0x100000000;\n decoded.latitude /= 1e7;\n\n decoded.longitude = bytes[4] + bytes[5] * 256 +\n bytes[6] * 65536 + bytes[7] * 16777216;\n if (decoded.longitude >= 0x80000000)\n decoded.longitude -= 0x100000000;\n decoded.longitude /= 1e7;\n\n decoded.inTrip = ((bytes[8] & 0x1) !== 0) ? true : false;\n decoded.fixFailed = ((bytes[8] & 0x2) !== 0) ? true : false;\n decoded.manDown = ((bytes[8] & 0x4) !== 0) ? true : false;\n decoded.headingDeg = (bytes[9] & 0x7) * 45;\n\n decoded.speedKmph = (bytes[9] >> 3) * 5;\n decoded.batV = bytes[10] * 0.025;\n }\n else if (port === 2)\n {\n decoded.type = \"downlink ack\";\n\n decoded.sequence = (bytes[0] & 0x7F);\n decoded.accepted = ((bytes[0] & 0x80) !== 0) ? true : false;\n decoded.fwMaj = bytes[1];\n decoded.fwMin = bytes[2];\n }\n else if (port === 3)\n {\n decoded.type = \"stats\";\n\n decoded.initialBatV = 4.0 + 0.100 * (bytes[0] & 0xF);\n decoded.txCount = 32 * ((bytes[0] >> 4) + (bytes[1] & 0x7F) * 16);\n decoded.tripCount = 32 * ((bytes[1] >> 7) + (bytes[2] & 0xFF) * 2\n + (bytes[3] & 0x0F) * 512);\n decoded.gpsSuccesses = 32 * ((bytes[3] >> 4) + (bytes[4] & 0x3F) * 16);\n decoded.gpsFails = 32 * ((bytes[4] >> 6) + (bytes[5] & 0x3F) * 4);\n decoded.aveGpsFixS = 1 * ((bytes[5] >> 6) + (bytes[6] & 0x7F) * 4);\n decoded.aveGpsFailS = 1 * ((bytes[6] >> 7) + (bytes[7] & 0xFF) * 2);\n decoded.aveGpsFreshenS = 1 * ((bytes[7] >> 8) + (bytes[8] & 0xFF) * 1);\n decoded.wakeupsPerTrip = 1 * ((bytes[8] >> 8) + (bytes[9] & 0x7F) * 1);\n decoded.uptimeWeeks = 1 * ((bytes[9] >> 7) + (bytes[10] & 0xFF) * 2);\n }\n return decoded;\n}\n",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 620,
+        "wires": [
+            [
+                "7428af79a7425af9"
+            ]
+        ]
+    },
+    {
+        "id": "542367cb497f4690",
+        "type": "delay",
+        "z": "81bf79cd33a5bd8a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 780,
+        "y": 460,
+        "wires": [
+            [
+                "011960955ce38515"
+            ]
+        ]
+    },
+    {
+        "id": "7fad29db55c7225e",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Cleanup  Layers",
+        "func": "msg1 = {payload : {command: {clear: \"link\"}}}\n\nmsg2 = {payload : {command: {clear: \"Gateway\"}}}\n\nmsg3 = {payload : {command: {clear: \"Node\"}}}\n\nreturn [msg1, msg2, msg3];",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 340,
+        "wires": [
+            [
+                "eb9e917c1235dc5b"
+            ],
+            [
+                "eb9e917c1235dc5b"
+            ],
+            [
+                "eb9e917c1235dc5b"
+            ]
+        ]
+    },
+    {
+        "id": "fc585c4391cbdf3e",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "legend",
+        "func": "\nmsg1 = {payload :{command :{ \"legend\": \"<b>Legend</b></br><i style=\\\"background: red\\\"></i> > -100 dBm<br><i style=\\\"background: orange\\\"></i> -100 - -105<br><i style=\\\"background: yellow\\\"></i> > -105 - -110 dBm<br><i style=\\\"background: green\\\"></i> > -110 - -115 dBm<br><i style=\\\"background: teal\\\"></i> > -115 - -120 dBm<br><i style=\\\"background: blue\\\"></i>   < -120 dBm<br>\" }}};\nreturn msg1 ;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "eb9e917c1235dc5b"
+            ]
+        ]
+    },
+    {
+        "id": "56852a1230a46795",
+        "type": "mqtt in",
+        "z": "81bf79cd33a5bd8a",
+        "name": "mqtt from TTN -  compact-tracker-abeeway@ttn",
+        "topic": "v3/+/devices/+/up",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "2e74031048050ac4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "42ea810aa4b7f698"
+            ]
+        ]
+    },
+    {
+        "id": "42ea810aa4b7f698",
+        "type": "function",
+        "z": "81bf79cd33a5bd8a",
+        "name": "Json",
+        "func": "\n\nmsg.json = JSON.stringify(msg.payload);\n\nmsg.topic = \"INSERT INTO json(timestamp,json) VALUES (\" + msg.payload.received_at + \"', '\" + msg.json + \"');\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 160,
+        "wires": [
+            [
+                "728f003f2d848f38"
+            ]
+        ]
+    },
+    {
+        "id": "728f003f2d848f38",
+        "type": "mysql",
+        "z": "81bf79cd33a5bd8a",
+        "mydb": "e15aca1763c788ca",
+        "name": "",
+        "x": 830,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "226706ca9c27b2b4",
+        "type": "comment",
+        "z": "81bf79cd33a5bd8a",
+        "name": "From TTN to DB json",
+        "info": "",
+        "x": 280,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e15aca1763c788ca",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "dbsoiot.civilwbkm1wy.eu-west-1.rds.amazonaws.com",
+        "port": "3306",
+        "db": "soiot",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "ee8b70d64868c9f1",
+        "type": "ui_group",
+        "name": "map",
+        "tab": "3d9f866bedf624e6",
+        "order": 1,
+        "disp": true,
+        "width": "36",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2e74031048050ac4",
+        "type": "mqtt-broker",
+        "name": "compact-tracker-abeeway@ttn",
+        "broker": "eu1.cloud.thethings.network",
+        "port": "8883",
+        "tls": "e7d6da8f.c8f9e8",
+        "clientid": "",
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3d9f866bedf624e6",
+        "type": "ui_tab",
+        "name": "TTN Map",
+        "icon": "mi-public",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e7d6da8f.c8f9e8",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true
+    }
+]
