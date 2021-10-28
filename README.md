@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/JohanScheepers/TTN-Mapper">
+  <a href="https://github.com/JohanScheepers/TTN-Node-Map">
     <img src="images/SIGNALOWL.jpg" alt="Logo" width="160" height="80">
   </a>
 
@@ -10,14 +10,14 @@
   <p align="center">
     Project is aimed to store node GPS points and then display on a map the nodes and gateway connections
     <br />
-    <a href="https://github.com/JohanScheepers/TTN-Mapper"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/JohanScheepers/TTN-Node-Map"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/JohanScheepers/TTN_Gateway_Node/blob/main/images/gatewayRadius.gif">View Demo</a>
     •
-    <a href="https://github.com/JohanScheepers/TTN-Mapper/issues">Report Bug</a>
+    <a href="https://github.com/JohanScheepers/TTN-Node-Map/issues">Report Bug</a>
     •
-    <a href="https://github.com/JohanScheepers/TTN-Mapper/issues">Request Feature</a>
+    <a href="https://github.com/JohanScheepers/TTN-Node-Map/issues">Request Feature</a>
   </p>
 </p>
 
@@ -215,7 +215,7 @@ You will also see all the “raw” data in the table from the DB.
 
 ## Roadmap
 
-See the [open issues](https://github.com/JohanScheepers/TTN_Gateway_Node/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/JohanScheepers/TTN-Node-Map/issues) for a list of proposed features (and known issues).
 
 </details>
 
@@ -232,7 +232,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 
-Project Link: [https://github.com/JohanScheepers/ TTN_Gateway_Node](https://github.com/JohanScheepers/TTN_Gateway_Node)
+Project Link: [https://github.com/JohanScheepers/ TTN-Node-Map](https://github.com/JohanScheepers/TTN-Node-Map)
 
 
 
