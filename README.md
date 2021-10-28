@@ -194,7 +194,7 @@ You will also see all the “raw” data in the table from the DB.
 
 ### Flow
 
-<img src="images/flow.png" alt="Demo" width="900" height="450">
+<img src="images/TTN_Node_Map_Flow.png" alt="Demo" width="900" height="450">
 
 
 
